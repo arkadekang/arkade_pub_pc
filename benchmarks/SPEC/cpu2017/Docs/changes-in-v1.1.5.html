@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+   <head>
+      <title>Changes in v1.1.5 - CPU 2017</title>
+      <!-- You'll want a nice wide screen when editing this .......................................................................... -->
+
+      <link rel="STYLESHEET" href="css/cpudocs.css" type="text/css" />
+      <link rel="STYLESHEET" href="css/cpudocsNoLinkie.css" media="print" type="text/css" />
+      <style type="text/css">
+h3 {margin-left:.5em; margin-bottom:.2em; font-size:90%;}
+      </style>
+   </head>
+   <body>
+
+
+      <h1>SPEC CPU&reg;2017 Changes in v1.1.5</h1>
+      <table class="version">
+         <tr>
+            <th>$Id: changes-in-v1.1.5.html 6399 2019-12-11 17:04:44Z JohnHenning $</th>
+            <td>Latest: <a class="external" href="https://www.spec.org/cpu2017/Docs/">www.spec.org/cpu2017/Docs/</a></td>
+         </tr>
+      </table>
+
+
+      <p>This document briefly describes changes in SPEC CPU&reg;2017 v1.1.5, a product of the SPEC&reg; non-profit corporation
+      <a href="https://www.spec.org/spec/" class="external">(about SPEC)</a>.  </p>
+      <p style="text-align:center;border:thin solid red;width:66%;padding:2px;margin:1em 3em;"><span class="alarm">All users
+         are strongly encouraged to update to v1.1.5,</span><br />
+      to improve compatibility, reliability, accuracy, and clarity (as described below).
+   <br />Updates are 
+   <a class="external" href="https://www.spec.org/cpu2017/Docs/runcpu.html#update">easy to do</a>.
+      </p>
+
+      <p class="snugbot">Contents: </p>
+      <p class="contentsrl3"><a href="#sysinfo">Changes to the sysinfo utility</a></p>
+      <p class="contentsrl3"><a href="#gcc">Updates for GCC</a></p>
+      <p class="contentsrl3"><a href="#rules">Updates to Run and Reporting Rules</a> </p>
+      <p class="contentsrl3"><a href="#benchmarks">Benchmark updates</a></p>
+      <p class="contentsrl4"><a href="#perlbench">500.perlbench_r / 600.perlbench_s</a></p>
+      <p class="contentsrl4"><a href="#parest">510.parest_r</a></p>
+      <p class="contentsrl3"><a href="#other">Other minor updates</a></p>
+
+
+      <h2 id="sysinfo">Changes to the sysinfo utility</h2>
+      <div class="l1">
+         <p>The <a href="utility.html#sysinfo">sysinfo</a> utility has several fixes and enhancements. 
+         The changes include:</p>
+         <ul>
+            <li>Report more detail about BIOS versions</li>
+            <li>Include more kernel self-reported vulnerability status reports</li>
+            <li>When reporting on DIMMs:
+               <ul>
+                  <li>Accept both "Configured Memory Speed" and "Configured Clock Speed"</li>
+                  <li>Avoid an error where sometimes an incorrect size unit would be reported ("KB" instead of "GB")</li>
+               </ul></li>
+               <li>Report <samp>tuned-adm</samp> status and <samp>scaling_governor</samp> status if available</li>
+         </ul>
+         <p>In addition, sysinfo output is now captured in the primary log file, which is useful if a run
+         fails without producing any other reports.</p>
+
+         <p>All users of CPU 2017 are encouraged to <a href="runcpu.html#update">update</a> their copy of SPEC CPU 2017 to
+         obtain these <samp>sysinfo</samp> changes, which may improve both accuracy and clarity of reports.</p>
+
+      </div>
+
+      <h2 id="gcc">Updates for GCC</h2>
+      <div class="l1">
+         <p>GCC version 10 requires workarounds for several benchmarks.  These workarounds do not qualify as
+         PORTABILITY 
+         (<a class="external" href="https://www.spec.org/cpu2017/Docs/runrules.html#portability">runrules.html#portability</a>)
+         and therefore must be applied consistently in base 
+         (<a class="external" href="https://www.spec.org/cpu2017/Docs/runrules.html#BaseFlags">runrules.html#BaseFlags</a>).
+         The example GCC config files have been updated to demonstrate how to apply the workarounds while complying with the
+         rules.  </p>
+
+         <p>Benchmarks with updated GCC notes include:</p>
+         <table class="noborder">
+            <tr><th>SPECrate</th><th>SPECspeed</th></tr>
+            <tr>
+               <td>
+                  <ul class="snug">
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/500.perlbench_r.html#portability">500.perlbench_r</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/502.gcc_r.html#portability">502.gcc_r</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/505.mcf_r.html#portability">505.mcf_r</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/511.povray_r.html#portability">511.povray_r</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/521.wrf_r.html#portability">521.wrf_r</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/525.x264_r.html#portability">525.x264_r</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/527.cam4_r.html#portability">527.cam4_r</a></li>
+                  </ul>
+               </td>
+               <td>
+                  <ul class="snug">
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/600.perlbench_s.html#portability">600.perlbench_s</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/602.gcc_s.html#portability">602.gcc_s</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/605.mcf_s.html#portability">605.mcf_s</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/621.wrf_s.html#portability">621.wrf_s</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/625.x264_s.html#portability">625.x264_s</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/627.cam4_s.html#portability">627.cam4_s</a></li>
+                     <li><a class="external" 
+                            href="https://www.spec.org/cpu2017/Docs/benchmarks/628.pop2_s.html#portability">628.pop2_s</a></li>
+                  </ul>
+               </td>
+            </tr>
+         </table>
+
+         <p>All who use GCC with SPEC CPU 2017 are encouraged to <a href="runcpu.html#update">update</a> their copy of SPEC CPU 
+         to obtain the new example config files, which are more compatible with contemporary GCC.</p>
+      </div>
+
+      <h2 id="rules">Updates to 
+         <a class="external" href="https://www.spec.org/cpu2017/Docs/runrules.html">Run and Reporting Rules</a> </h2>
+         <p class="l1">Rule <a class="external" href="https://www.spec.org/cpu2017/Docs/runrules.html#rule_2.2.4">2.2.4</a>
+         regarding size changes was clarified, adding references to related rules.</p>
+         
+
+      <h2 id="benchmarks">Benchmark updates</h2>
+
+      <h3 id="perlbench">500.perlbench_r / 600.perlbench_s</h3>
+            <p class="l1">Removed <samp>op/time_loop</samp> from the (non-timed) test workload, which was discovered to
+            be non-portable when a compiler user reported that undefined behavior on a conversion caused the test to always
+            fail, independent of optimization level.  The test was for a case that does not arise in the (timed)
+            reference workload.  </p>
+
+      <h3 id="parest">510.parest_r</h3>
+      <div class="l1snugtop">
+         <p class="snug">Added portability option <kbd>-DSPEC_PAREST_STD_FLUSH_WORKAROUND</kbd> which works around an issue
+         in module <samp class="snugr">message_log.cc</samp>, which takes the address of <samp>std::flush</samp> and uses it
+         in a comparison. If a compiler does not generate consistent results for the address, then the comparison fails and
+         510.parest_r does not generate any output.</p>
+
+         <p>It is also conceivable that a C++2003 compiler might forbid taking the address of <samp>std::flush</samp>, 
+         because it was not explicitly deemed acceptable to do so prior to C++20.</p>
+
+         <p>In either of those cases, this flag may be used. It substitutes an alternate <samp>flush</samp> function in the
+         <samp>MessageLog</samp> namespace thereby allowing the comparison to succeed.</p>
+
+      </div>
+
+
+      <h2>Presubmission tools</h2>
+
+      <p class="l1">Results that are published at SPEC are reviewed by a series of perl scripts prior to publication.  A
+      subset of those tools is included with SPEC CPU 2017 v1.1.5 in directory <samp>$SPEC/bin/presubmit</samp> (Unix) or
+      <samp>%SPEC%\bin\presubmit</samp> (Windows).  If you use the presubmit tools, your review of results may be quicker
+      or smoother.  Please see the <samp>README.txt</samp> file in that directory.</p>
+
+
+
+
+      <h2 id="other">Other minor updates</h2>
+      <ul class="l1">
+         <li>The syntax checker (<a href="runcpu.html#subcheck">runcpu --output_format=check</a>) has several
+            minor fixes.</li>
+         <li>Fixed a race condition that could cause some information not to be logged.</li>
+         <li>Power measurement does not support the use of voltage auto-ranging.  Any attempt to do so will stop the
+            run.</li>
+         <li>Other minor clarifications were made to both documentation and printed messages.</li>
+         <li>For more detail, see the list of <a class="external" href="https://www.spec.org/cpu2017/Docs/Revisions.txt">Revisions</a>.</li>
+      </ul>
+
+      <p class="l1">Your copy of SPEC CPU 2017 will be more reliable with the above fixes.  You should 
+      <a href="runcpu.html#update">update</a>.</p>
+
+
+      <p style="border-top:thin solid black;">
+      SPEC CPU&reg;2017 Changes in v1.1.5:
+      Copyright&nbsp;&copy;&nbsp;2020 Standard Performance Evaluation Corporation (SPEC&reg;)</p>
+      <!-- this space intentionally left blank: some empty space at the bottom increases the probability that clicking on a link in
+         the table of contents will actually position the desired section at the top of your browser window -->
+         <p style="margin:300px 1em;">&nbsp;</p>
+
+
+   </body>
+</html>
+
+
+

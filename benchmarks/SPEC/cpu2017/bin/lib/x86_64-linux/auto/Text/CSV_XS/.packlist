@@ -1,0 +1,3 @@
+/spec/cpu2017/tools/output/lib/perl5/site_perl/5.24.0/x86_64-linux/Text/CSV_XS.pm relocate_as=../../../Text/CSV_XS.pm
+/spec/cpu2017/tools/output/lib/perl5/site_perl/5.24.0/x86_64-linux/auto/Text/CSV_XS/CSV_XS.so relocate_as=CSV_XS.so
+/spec/cpu2017/tools/output/man/man3/Text::CSV_XS.3 relocate_as=../../../../../../../../man/man3/Text::CSV_XS.3

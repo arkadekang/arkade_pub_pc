@@ -1,0 +1,152 @@
+--------------------------------------------------------------------------
+  W A R N I N G      W A R N I N G      W A R N I N G      W A R N I N G
+--------------------------------------------------------------------------
+The following text file was automatically generated from a document that
+you really should read in HTML format.  This text document is only a poor
+fallback if you cannot read HTML, and using it is NOT RECOMMENDED.
+
+To read this document in the recommended way, point your favorite web
+browser at one of these 3 places:
+(1) The SPEC site https://www.spec.org/cpu2017/Docs/
+(2) The Docs directory from the original CPU2017 ISO image
+(3) The Docs directory on the system where you have installed
+    your SPEC CPU2017 tree - for example:
+    /spec/cpu2017/Docs/ (Unix) or D:\spec\cpu2017\Docs\ (Windows)
+--------------------------------------------------------------------------
+  W A R N I N G      W A R N I N G      W A R N I N G      W A R N I N G
+--------------------------------------------------------------------------
+
+                       SPEC CPU(R)2017 Changes in v1.1.5
+
+      $Id: changes-in-v1.1.5.html 6399     Latest: www.spec.org/cpu2017/Docs/
+     2019-12-11 17:04:44Z JohnHenning $
+
+   This document briefly describes changes in SPEC CPU(R)2017 v1.1.5, a
+   product of the SPEC(R) non-profit corporation (about SPEC).
+
+             All users are strongly encouraged to update to v1.1.5,
+   to improve compatibility, reliability, accuracy, and clarity (as described
+                                    below).
+                            Updates are easy to do.
+
+   Contents:
+
+   Changes to the sysinfo utility
+
+   Updates for GCC
+
+   Updates to Run and Reporting Rules
+
+   Benchmark updates
+
+   500.perlbench_r / 600.perlbench_s
+
+   510.parest_r
+
+   Other minor updates
+
+Changes to the sysinfo utility
+
+   The sysinfo utility has several fixes and enhancements. The changes
+   include:
+
+     * Report more detail about BIOS versions
+     * Include more kernel self-reported vulnerability status reports
+     * When reporting on DIMMs:
+
+          * Accept both "Configured Memory Speed" and "Configured Clock
+            Speed"
+          * Avoid an error where sometimes an incorrect size unit would be
+            reported ("KB" instead of "GB")
+
+     * Report tuned-adm status and scaling_governor status if available
+
+   In addition, sysinfo output is now captured in the primary log file, which
+   is useful if a run fails without producing any other reports.
+
+   All users of CPU 2017 are encouraged to update their copy of SPEC CPU 2017
+   to obtain these sysinfo changes, which may improve both accuracy and
+   clarity of reports.
+
+Updates for GCC
+
+   GCC version 10 requires workarounds for several benchmarks. These
+   workarounds do not qualify as PORTABILITY (runrules.html#portability) and
+   therefore must be applied consistently in base (runrules.html#BaseFlags).
+   The example GCC config files have been updated to demonstrate how to apply
+   the workarounds while complying with the rules.
+
+   Benchmarks with updated GCC notes include:
+
+         SPECrate              SPECspeed
+     * 500.perlbench_r     * 600.perlbench_s
+     * 502.gcc_r           * 602.gcc_s
+     * 505.mcf_r           * 605.mcf_s
+     * 511.povray_r        * 621.wrf_s
+     * 521.wrf_r           * 625.x264_s
+     * 525.x264_r          * 627.cam4_s
+     * 527.cam4_r          * 628.pop2_s
+
+   All who use GCC with SPEC CPU 2017 are encouraged to update their copy of
+   SPEC CPU to obtain the new example config files, which are more compatible
+   with contemporary GCC.
+
+Updates to Run and Reporting Rules
+
+   Rule 2.2.4 regarding size changes was clarified, adding references to
+   related rules.
+
+Benchmark updates
+
+  500.perlbench_r / 600.perlbench_s
+
+   Removed op/time_loop from the (non-timed) test workload, which was
+   discovered to be non-portable when a compiler user reported that undefined
+   behavior on a conversion caused the test to always fail, independent of
+   optimization level. The test was for a case that does not arise in the
+   (timed) reference workload.
+
+  510.parest_r
+
+   Added portability option -DSPEC_PAREST_STD_FLUSH_WORKAROUND which works
+   around an issue in module message_log.cc, which takes the address of
+   std::flush and uses it in a comparison. If a compiler does not generate
+   consistent results for the address, then the comparison fails and
+   510.parest_r does not generate any output.
+
+   It is also conceivable that a C++2003 compiler might forbid taking the
+   address of std::flush, because it was not explicitly deemed acceptable to
+   do so prior to C++20.
+
+   In either of those cases, this flag may be used. It substitutes an
+   alternate flush function in the MessageLog namespace thereby allowing the
+   comparison to succeed.
+
+Presubmission tools
+
+   Results that are published at SPEC are reviewed by a series of perl
+   scripts prior to publication. A subset of those tools is included with
+   SPEC CPU 2017 v1.1.5 in directory $SPEC/bin/presubmit (Unix) or
+   %SPEC%\bin\presubmit (Windows). If you use the presubmit tools, your
+   review of results may be quicker or smoother. Please see the README.txt
+   file in that directory.
+
+Other minor updates
+
+     * The syntax checker (runcpu --output_format=check) has several minor
+       fixes.
+     * Fixed a race condition that could cause some information not to be
+       logged.
+     * Power measurement does not support the use of voltage auto-ranging.
+       Any attempt to do so will stop the run.
+     * Other minor clarifications were made to both documentation and printed
+       messages.
+     * For more detail, see the list of Revisions.
+
+   Your copy of SPEC CPU 2017 will be more reliable with the above fixes. You
+   should update.
+
+   SPEC CPU(R)2017 Changes in v1.1.5: Copyright (c) 2020 Standard Performance
+   Evaluation Corporation (SPEC(R))
+
+

@@ -1,0 +1,6 @@
+/spec/cpu2017/tools/output/lib/perl5/site_perl/5.24.0/XML/SAX/Base.pm relocate_as=../../../../../XML/SAX/Base.pm
+/spec/cpu2017/tools/output/lib/perl5/site_perl/5.24.0/XML/SAX/BuildSAXBase.pl relocate_as=../../../../../XML/SAX/BuildSAXBase.pl
+/spec/cpu2017/tools/output/lib/perl5/site_perl/5.24.0/XML/SAX/Exception.pm relocate_as=../../../../../XML/SAX/Exception.pm
+/spec/cpu2017/tools/output/man/man3/XML::SAX::Base.3 relocate_as=../../../../../../../../../man/man3/XML::SAX::Base.3
+/spec/cpu2017/tools/output/man/man3/XML::SAX::BuildSAXBase.3 relocate_as=../../../../../../../../../man/man3/XML::SAX::BuildSAXBase.3
+/spec/cpu2017/tools/output/man/man3/XML::SAX::Exception.3 relocate_as=../../../../../../../../../man/man3/XML::SAX::Exception.3

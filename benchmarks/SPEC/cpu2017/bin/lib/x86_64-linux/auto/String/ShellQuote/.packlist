@@ -1,0 +1,4 @@
+/spec/cpu2017/tools/output/bin/shell-quote relocate_as=../../../../../../../../bin/shell-quote
+/spec/cpu2017/tools/output/lib/perl5/site_perl/5.24.0/String/ShellQuote.pm relocate_as=../../../../String/ShellQuote.pm
+/spec/cpu2017/tools/output/man/man1/shell-quote.1 relocate_as=../../../../../../../../man/man1/shell-quote.1
+/spec/cpu2017/tools/output/man/man3/String::ShellQuote.3 relocate_as=../../../../../../../../man/man3/String::ShellQuote.3

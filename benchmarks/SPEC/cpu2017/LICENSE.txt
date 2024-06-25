@@ -1,0 +1,19 @@
+SPEC CPU(R) benchmark suites are licensed software.
+
+The SPEC(R) license may be found at
+
+    https://www.spec.org/spec/docs/SPEC_General-License-Example.pdf
+
+It is also included with this software as
+
+    $SPEC/Docs/licenses/SPEC-License.pdf    (Unix)
+or
+    %SPEC%\Docs\licenses\SPEC-License.pdf  (Windows)
+
+Freely-redistributable source components included within SPEC CPU software
+are licensed separately, and remain freely redistributable.
+
+See the information in the file
+    $SPEC/Docs/licenses.html (Unix)
+or
+    %SPEC%\Docs\licenses.html (Windows)

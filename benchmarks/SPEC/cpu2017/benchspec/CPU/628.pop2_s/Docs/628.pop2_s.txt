@@ -1,0 +1,192 @@
+                                   628.pop2_s
+                     SPEC CPU(R)2017 Benchmark Description
+
+  Benchmark Name
+
+   628.pop2_s
+
+  Benchmark Author
+
+   Ocean Model Working Group and Los Alamos National Laboratory.
+   CESM is sponsored by the National Science Foundation (NSF) and the U.S.
+   Department of Energy (DOE). Administration of the CESM is maintained by
+   the Climate and Global Dynamics Division (CGD) at the National Center for
+   Atmospheric Research (NCAR).
+
+  Benchmark Program General Category
+
+   Climate modeling
+
+  Benchmark Description
+
+   The Parallel Ocean Program (POP) was developed at LANL under the
+   sponsorship of the Department of Energy's CHAMMP program, which brought
+   massively parallel computers to the realm of climate modeling. POP is a
+   descendent of the Bryan-Cox-Semtner class of ocean models first developed
+   by Kirk Bryan and Michael Cox [4] at the NOAA Geophysical Fluid Dynamics
+   Laboratory in Princeton, NJ in the late 1960s. POP had its origins in a
+   version of the model developed by Semtner and Chervin [18] [5].
+
+   628.pop2_s is a port to SPEC based on the CESM1.0 (Community Earth System
+   Model) coupled climate model for simulating the earth's climate system.
+   Composed of four separate models simultaneously simulating the earth's
+   atmosphere, ocean, land surface and sea-ice, and one central coupler
+   component, the CESM allows researchers to conduct fundamental research
+   into the earth's past, present and future climate states.
+
+   The ocean component of the CESM1.0 is the Parallel Ocean Program version 2
+   (POP2). This model is based on the POP version 2.1 of the Los Alamos
+   National Laboratory; however, it includes many physical and software
+   developments incorporated by the members of the Ocean Model Working Group
+
+   MPI Stubs This version of POP does not use MPI. A set of 'mpi_serial' of
+   routines were used to avoid removing the MPI calls all over the place
+
+  Input Description
+
+   As 628.pop2_s contains the coupled system (CESM) there are a lot of input
+   files, notably:
+   drv_in.in, pop2_in, dlnd_in, dice_in and datm_in
+   plus a lot of other text, binary and netcdf files.
+
+   The datasets are based on CESM data for COMPSET=C RES=4x5_gx3v7, but to
+   reduce the size of 628.pop2_s datasets the files are truncated using
+   ncdump/ncgen NETCDF utilities to represent 62 days of simulation.
+
+   The test, train and ref datasets are identical except for number of days
+   to simulate: 1, 5 and 50.
+
+   The workload can be adjusted by changing number of days simulation in
+   drv_in.in. In addition, a second parameter in pop2_in: steps_per_day can
+   be adjusted (for example, 12 vs 24 takes approximately twice as long).
+
+   Much more information about the inputs may be found in the [1]Parallel
+   Ocean Program (POP) User Guide
+
+  Output Description
+
+   Similarly to the input files, as 628.pop2_s is part of a coupled system
+   (CESM) there are a lot of text and binary output files. The most important
+   one is
+   ocn.log which also is the file used in verification/validation of the run.
+
+   See [2]Parallel Ocean Program (POP) User Guide
+
+  Programming Language
+
+   Fortran90 and C (for the NETCDF library which is an integral part of the
+   ported code
+
+  Known portability issues
+
+    1. GCC 10 argument mismatch: If you compile using GCC 10 (and presumably
+       later) compilers, you must use -fallow-argument-mismatch. If you do
+       not include this flag, compiles will fail with message:
+
+ Error: Type mismatch between actual argument at (1) and actual argument at (2)
+
+       For more information, see
+       [3]https://gcc.gnu.org/gcc-10/porting_to.html.
+
+       Note that in accordance with the same-for-all rule
+       [4]www.spec.org/cpu2017/Docs/runrules.html#BaseFlags it is not allowed
+       to set -fallow-argument-mismatch as a PORTABILITY option. Instead, it
+       must be applied to all of Base. The Example GCC config files as
+       updated for SPEC CPU 2017 v1.1.5 obey this rule.
+
+    2. floating-point exceptions with GCC: Users of GCC may encounter errors
+       similar to these:
+
+     *** Miscompare of ocn.log
+        1513:    Chlorophyll transmission table computed
+                 Could not find range for chlamnt =  1.0000E-03
+
+       Note: The following floating-point exceptions are signalling: IEEE_UNDERFLOW_FLAG
+       POP aborting...
+         set_chl_trans range error for chlamnt
+
+       The problem appears to be a comparison to an exact value which is no
+       longer exact in the presence of certain optimizations, as discussed at
+       [5]https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82004
+
+       Suggested workaround: use [6]basepeak for 628.pop2_s. The GCC Example
+       config files supplied with CPU 2017 v1.1.5 demonstrate how to do this.
+
+    Data Formats and Endian Issues
+
+   Some input files are not read by NetCDF; instead, they are read as
+   unformatted data from big-endian format files. If you are using a
+   little-endian platform, you will probably need to provide a compiler flag
+   so that those files can be read properly. For example:
+
+     * GCC on little-endian systems -fconvert=big-endian.
+     * Oracle Solaris Studio on a little-endian platform:
+       -xfilebyteorder=big8
+     * Intel Fortan: -convert big_endian
+
+    NAMELIST Input Processing
+
+   When reading NAMELIST input, your compiler needs to respect punctuation
+   marks required by the Fortran 2003 standard (section 10.10.1.2 and note
+   10.35). For example, consider the data file below.
+
+ $ cat -n datm_atm_in
+    1     &shr_strdata_nml
+    2       dataMode       = 'CORE2'
+    3       domainFile     = './domain.lnd.fv4x5_gx3v7.091218.nc'
+    4       streams        = 'nyf.giss.T62.stream.txt 1 1 1 ' ,
+    5                        'nyf.gxgxs.T62.stream.txt 1 1 1 ' ,
+    6                        'nyf.ncep.T62.stream.txt 1 1 1 '
+    7       vectors        = 'u:v'
+    8       mapmask        = 'nomask',
+    9                        'nomask',
+   10                        'nomask'
+   11       tintalgo       = 'linear',
+   12                        'linear',
+   13                        'linear'
+   14      /
+ $
+
+   Your compiler must recognize that 3 elements are assigned for streams, 3
+   elements for mapmask, and so forth.
+
+  Sources and Licensing
+
+   POP is licensed via the Los Alamos National Laboratory CICE license. It
+   includes netcdf.
+
+   Please see details in the document [7]SPEC CPU(R)2017 Licenses.
+
+  References
+
+     * [8]Parallel Ocean Program (POP) User Guide
+     * [9]CESM 1.0
+     * [10]CESM 1.0 page for POP2
+     * [11]CESM User's Guide
+     * [12]POP2 Component Model Namelist Variables
+     * [13]POP2 build-time settings
+     * [14]How are cice and pop decompositions set and how do I override
+       them?
+
+   Last updated: $Date: 2020-09-23 10:06:01 -0400 (Wed, 23 Sep 2020) $
+
+   Copyright (c) 2017-2020 Standard Performance Evaluation Corporation
+   (SPEC(R))
+
+References
+
+   Visible links
+   1. http://www.cesm.ucar.edu/models/cesm1.0/pop2/doc/users/POPusers_main.html
+   2. http://www.cesm.ucar.edu/models/cesm1.0/pop2/doc/users/POPusers_main.html
+   3. https://gcc.gnu.org/gcc-10/porting_to.html
+   4. https://www.spec.org/cpu2017/Docs/runrules.html#BaseFlags
+   5. https://gcc.gnu.org/bugzilla/show_bug.cgi?id=82004
+   6. https://www.spec.org/cpu2017/Docs/config.html#basepeak
+   7. https://www.spec.org/cpu2017/Docs/licenses.html#bmk628.pop2_s
+   8. http://www.cesm.ucar.edu/models/cesm1.0/pop2/doc/users/POPusers_main.html
+   9. http://www.cesm.ucar.edu/models/cesm1.0/
+  10. http://www.cesm.ucar.edu/models/cesm1.0/pop2/
+  11. http://www.cesm.ucar.edu/models/cesm1.1/cesm/doc/usersguide/book1.html
+  12. http://www.cesm.ucar.edu/models/cesm1.1/cesm/doc/modelnl/nl_pop2.html
+  13. http://www.cesm.ucar.edu/models/cesm1.1/cesm/doc/modelnl/env_build.html#build_pop2
+  14. http://www.cesm.ucar.edu/models/cesm1.0/cesm/cesm_doc_1_0_4/x3126.html

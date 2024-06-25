@@ -1,0 +1,2 @@
+/spec/cpu2017/tools/output/lib/perl5/site_perl/5.24.0/XML/NamespaceSupport.pm relocate_as=../../../../XML/NamespaceSupport.pm
+/spec/cpu2017/tools/output/man/man3/XML::NamespaceSupport.3 relocate_as=../../../../../../../../man/man3/XML::NamespaceSupport.3

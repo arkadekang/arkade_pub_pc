@@ -1,0 +1,2 @@
+/spec/cpu2017/tools/output/lib/perl5/site_perl/5.24.0/IO/String.pm relocate_as=../../../../IO/String.pm
+/spec/cpu2017/tools/output/man/man3/IO::String.3 relocate_as=../../../../../../../../man/man3/IO::String.3
